@@ -11,6 +11,8 @@ date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 $app = new Egal\Core\Application(dirname(__DIR__));
 
 $app->singleton(Illuminate\Contracts\Debug\ExceptionHandler::class, App\Exceptions\Handler::class);
+$app->singleton(Illuminate\Contracts\Console\Kernel::class, App\Console\Kernel::class);
+
 $app->singleton(Egal\Core\Bus\Bus::class, static fn (): Egal\Core\Bus\Bus => Egal\Core\Bus\BusCreator::createBus());
 
 $app->configure('app');
@@ -18,6 +20,7 @@ $app->configure('queue');
 $app->configure('swoole');
 
 $app->register(App\Providers\AppServiceProvider::class);
+$app->register(\Egal\CodeGenerator\ServiceProvider::class);
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',

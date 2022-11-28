@@ -63,7 +63,5 @@ COPY --chown=$user composer.lock .
 RUN composer install --no-interaction --no-progress --no-autoloader --dev
 COPY --chown=$user . .
 RUN composer dump-autoload
-# TODO: Избавиться от chmod
-RUN chmod -R 755 /app
-
+RUN chmod 777 /app
 CMD /wait && ./server
