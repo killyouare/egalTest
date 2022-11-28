@@ -15,8 +15,10 @@ class CreateLotteryGameMatchUsersTable extends Migration
     {
         Schema::create('lottery_game_match_users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('lottery_game_match_id');
+            $table->foreignId('user_id')
+                ->constrained();
+            $table->foreignId('lottery_game_match_id')
+                ->constrained();
         });
     }
 

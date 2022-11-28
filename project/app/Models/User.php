@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property integer $id {@property-type field} {@primary-key} {@validation-rules integer|filled}
  * @property string $first_name {@property-type field} {@validation-rules required|string}
  * @property string $last_name {@property-type field} {@validation-rules required|string}
- * @property string $email {@property-type field} {@validation-rules required|string}
+ * @property string $email {@property-type field} {@validation-rules bail|required|string|unique:users,email}
  * @property string $password {@property-type field} {@validation-rules required|string}
  * @property bool $is_admin {@property-type field} {@validation-rules boolean|filled}
  * @property integer $points {@property-type field} {@validation-rules integer}

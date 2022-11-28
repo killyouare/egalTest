@@ -15,10 +15,12 @@ class CreateLotteryGameMatchesTable extends Migration
     {
         Schema::create('lottery_game_matches', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('game_id');
+            $table->foreignId('game_id')
+                ->constrained('lottery_games');
             $table->timestamp('start_date');
             $table->timestamp('start_time');
-            $table->unsignedBigInteger('winner_id');
+            $table->foreignId('winner_id')
+                ->constrained('users');
         });
     }
 
