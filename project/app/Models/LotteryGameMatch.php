@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Egal\Model\Model as EgalModel;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Concerns\HasRelationships;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -24,6 +25,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class LotteryGameMatch extends EgalModel
 {
+
+    use HasRelationships;
+
     public function game(): HasOne
     {
         return $this->hasOne(LotteryGame::class);

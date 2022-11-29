@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Egal\Model\Model as EgalModel;
+use Illuminate\Database\Eloquent\Concerns\HasRelationships;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -17,6 +18,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class LotteryGameMatchUser extends EgalModel
 {
+
+    use HasRelationships;
+
+
     public function user(): HasOne
     {
         return $this->hasOne(User::class);
