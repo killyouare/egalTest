@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpMissingFieldTypeInspection */
+<?php
 
 namespace App\Console\Commands;
 
@@ -11,7 +11,6 @@ class DebugCommand extends Command
 
     public function handle(): void
     {
-        //
     }
 
 }

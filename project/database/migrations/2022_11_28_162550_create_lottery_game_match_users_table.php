@@ -16,9 +16,14 @@ class CreateLotteryGameMatchUsersTable extends Migration
         Schema::create('lottery_game_match_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                ->constrained();
+                ->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
             $table->foreignId('lottery_game_match_id')
-                ->constrained();
+                ->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            $table->timestamps();
         });
     }
 

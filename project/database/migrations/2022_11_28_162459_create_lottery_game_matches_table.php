@@ -16,11 +16,17 @@ class CreateLotteryGameMatchesTable extends Migration
         Schema::create('lottery_game_matches', function (Blueprint $table) {
             $table->id();
             $table->foreignId('game_id')
-                ->constrained('lottery_games');
+                ->constrained('lottery_games')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
             $table->timestamp('start_date');
             $table->timestamp('start_time');
             $table->foreignId('winner_id')
-                ->constrained('users');
+                ->nullable()
+                ->constrained('users')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
+            $table->timestamps();
         });
     }
 

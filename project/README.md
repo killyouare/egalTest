@@ -1,9 +1,10 @@
 <p align="center"><img src="https://raw.githubusercontent.com/egal/.art/main/logo.svg" height="150"></p>
-<h1 align="center">Egal | Web Service</h1>
+<h1 align="center">Egal | Egal/Egal PHP Project</h1>
 <p align="center">
-<a href="https://github.com/egal/egal-web-service"><img src="https://img.shields.io/github/license/egal/egal-web-service"></a>
-<a href="https://hub.docker.com/r/egalbox/web-service"><img src="https://img.shields.io/docker/v/egalbox/web-service"></a>
-<a href="https://hub.docker.com/r/egalbox/web-service"><img src="https://img.shields.io/docker/pulls/egalbox/web-service"></a>
+ <a href="https://packagist.org/packages/egal/egal"><img src="https://poser.pugx.org/egal/egal/v"></a>
+ <a href="https://packagist.org/packages/egal/egal"><img src="https://poser.pugx.org/egal/egal/v/unstable"></a>
+ <a href="https://packagist.org/packages/egal/egal"><img src="https://poser.pugx.org/egal/egal/downloads"></a>
+ <a href="https://packagist.org/packages/egal/egal"><img src="https://poser.pugx.org/egal/egal/license"></a>
 </p>
 
 ## Новости
@@ -16,7 +17,7 @@
 ## Документация
 
 С подробной документацией по продукту можно ознакомиться
-[здесь](https://egal.github.io/egal-docs/#/).
+[здесь](https://docs.egal.pro).
 
 
 ## Поддержка

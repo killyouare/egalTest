@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Factories;
+
 use App\Models\LotteryGame;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -12,7 +14,7 @@ class LotteryGameFactory extends Factory
     {
         return [
             "name" => $this->faker->word(),
-            "gamer_count" => $this->faker->numberBetween(1),
+            "gamer_count" => $this->faker->numberBetween(2, 5),
             "reward_points" => $this->faker->numberBetween(),
         ];
     }

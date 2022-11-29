@@ -18,6 +18,7 @@ class CreateLotteryGamesTable extends Migration
             $table->string('name');
             $table->bigInteger('gamer_count')->default(1);
             $table->bigInteger('reward_points')->default(0);
+            $table->timestamps();
         });
     }
 

@@ -13,6 +13,7 @@ class LotteryGameSeeder extends Seeder
      */
     public function run(): void
     {
-        LotteryGame::factory(10);
+        LotteryGame::factory(10)->create();
+
     }
 }
