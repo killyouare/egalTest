@@ -7,7 +7,7 @@ services:
     build:
       context: ../project
       args:
-        DEBUG: 'true'
+        DEBUG: ${APP_DEBUG:-true}
     volumes:
       - ../project/:/app/
     environment:
