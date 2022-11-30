@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "b243e171-63f4-429c-8b27-6b386de184ce",
+		"name": "Helpers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17729361"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"try {",
+									"    pm.environment.set(\"userToken\", pm.response.json().action_result.data)",
+									"} catch (e) {",
+									"    console.log(e)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{userEmail}}\",\n    \"password\": \"{{userPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{applicationService}}/User/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{applicationService}}",
+								"User",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"try {",
+									"    pm.environment.set(\"adminToken\", pm.response.json().action_result.data)",
+									"} catch (e) {",
+									"    console.log(e)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{adminEmail}}\",\n    \"password\": \"{{adminPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{applicationService}}/User/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{applicationService}}",
+								"User",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

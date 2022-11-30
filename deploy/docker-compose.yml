@@ -5,11 +5,11 @@ services:
   application:
     container_name: ${PROJECT_NAME:-project}-application
     build:
-      context: ./project
+      context: ../project
       args:
         DEBUG: 'true'
     volumes:
-      - ./project/:/app/
+      - ../project/:/app/
     environment:
       APP_SERVICE_NAME: application
       APP_SERVICE_KEY: B#J5mUWKh8FqzQ6Tj0XtYruIcSwpb@ed
