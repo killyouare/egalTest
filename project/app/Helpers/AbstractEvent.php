@@ -10,12 +10,24 @@ abstract class AbstractEvent extends Event
 
     private Model $model;
 
-    public function __construct(Model $model)
+    private array $attributes;
+
+    public function __construct(mixed $value)
     {
-        $this->setModel($model);
+        $type = gettype($value);
+        if ($type === "array") {
+            $this->attributes = $value;
+        } else {
+            $this->setModel($value);
+        }
     }
 
-    public function setModel($model): void
+    public function getEventAttributes(): array
+    {
+        return $this->attributes;
+    }
+
+    public function setModel(Model $model): void
     {
         $this->model = $model;
     }

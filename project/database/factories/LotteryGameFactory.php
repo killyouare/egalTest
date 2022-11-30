@@ -13,7 +13,7 @@ class LotteryGameFactory extends Factory
     public function definition(): array
     {
         return [
-            "name" => $this->faker->word(),
+            "name" => $this->faker->unique()->word(),
             "gamer_count" => $this->faker->numberBetween(2, 5),
             "reward_points" => $this->faker->numberBetween(),
         ];

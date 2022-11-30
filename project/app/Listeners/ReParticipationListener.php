@@ -6,9 +6,7 @@ use App\Exceptions\ReParticipationException;
 use App\Helpers\AbstractEvent;
 use App\Helpers\AbstractListener;
 use App\Helpers\SessionHelper;
-use App\Models\LotteryGameMatch;
 use App\Models\LotteryGameMatchUser;
-use Egal\Core\Session\Session;
 
 class ReParticipationListener extends AbstractListener
 {

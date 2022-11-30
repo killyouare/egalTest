@@ -2,7 +2,11 @@
 
 namespace App\Models;
 
+use App\Events\UpdatingLotteryGameMatchEvent;
 use Carbon\Carbon;
+use Egal\Model\Exceptions\ObjectNotFoundException;
+use Egal\Model\Exceptions\UpdateException;
+use Egal\Model\Exceptions\ValidateException;
 use Egal\Model\Model as EgalModel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasRelationships;
@@ -24,7 +28,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @action getItems {@statuses-access logged|guest}
  * @action create {@statuses-access logged} {@roles-access admin}
- * @action update {@statuses-access logged} {@roles-access admin}
+ * @action close {@statuses-access logged} {@roles-access admin}
  */
 class LotteryGameMatch extends EgalModel
 {
@@ -42,6 +46,23 @@ class LotteryGameMatch extends EgalModel
         'updated_at',
     ];
 
+    /**
+     * @throws ObjectNotFoundException
+     * @throws UpdateException
+     * @throws ValidateException
+     */
+    public static function actionClose(array $attributes): string
+    {
+        event(new UpdatingLotteryGameMatchEvent($attributes));
+
+        return 'Game closed';
+    }
+
+    public function validateKey($keyValue): void
+    {
+        parent::validateKey($keyValue);
+    }
+
     public function game(): HasOne
     {
         return $this->hasOne(LotteryGame::class, 'id', 'game_id');
@@ -49,11 +70,11 @@ class LotteryGameMatch extends EgalModel
 
     public function players(): HasMany
     {
-        return $this->hasMany(LotteryGameMatchUser::class);
+        return $this->hasMany(LotteryGameMatchUser::class, 'lottery_game_match_id', 'id');
     }
 
     public function winner(): HasOne
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, "id", "winner_id");
     }
 }

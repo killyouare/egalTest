@@ -17,7 +17,7 @@ class OwnerRule extends EgalRule
 
     public function message(): string
     {
-        return "You not owner"; // TODO
+        return "You not owner";
     }
 
 }

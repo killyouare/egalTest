@@ -15,7 +15,7 @@ class CreateLotteryGamesTable extends Migration
     {
         Schema::create('lottery_games', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->bigInteger('gamer_count')->default(1);
             $table->bigInteger('reward_points')->default(0);
             $table->timestamps();

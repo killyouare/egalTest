@@ -13,7 +13,9 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        if (!User::where('email', 'user@user.com')->exists()) {
+        if (!User::query()
+            ->where('email', 'user@user.com')
+            ->exists()) {
             User::factory()
                 ->create([
                     'email' => 'user@user.com',
@@ -22,7 +24,9 @@ class UserSeeder extends Seeder
                 ]);
         }
 
-        if (!User::where('email', 'admin@admin.com')->exists()) {
+        if (!User::query()
+            ->where('email', 'admin@admin.com')
+            ->exists()) {
             User::factory()
                 ->create([
                     'email' => 'admin@admin.com',

@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Collection|LotteryGameMatchUser[] $matches {@property-type relation}
  *
  * @action getItems {@statuses-access logged} {@roles-access admin}
- * @action create {@statuses-access guest}
+ * @action register {@statuses-access guest}
  * @action update {@statuses-access logged} {@roles-access user}
  * @action delete {@statuses-access logged} {@roles-access user}
  * @action login {@statuses-access guest}
@@ -48,7 +48,6 @@ class User extends BaseUser
 
     protected $hidden = [
         "password",
-        "is_admin",
         "created_at",
         "updated_at",
     ];
@@ -67,6 +66,11 @@ class User extends BaseUser
         }
 
         return $user->generateUST();
+    }
+
+    public static function actionRegister(array $attributes = []): array
+    {
+        return parent::actionCreate($attributes);
     }
 
     protected function password(): Attribute
