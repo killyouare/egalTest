@@ -19,7 +19,7 @@ class ReParticipationListener extends AbstractListener
     public function handle(AbstractEvent $event): void
     {
         $name = 'lottery_game_match_id';
-        $user_id = Session::getUserServiceToken()->getAuthInformation()['id'];
+
         if (LotteryGameMatchUser::query()
             ->where([
                 'user_id' => SessionHelper::getUserId(),

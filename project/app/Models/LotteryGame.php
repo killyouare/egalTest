@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property integer $id {@property-type field} {@primary-key} {@validation-rules integer|filled}
- * @property string $name {@property-type field} {@validation-rules required|string}
+ * @property string $name {@property-type field} {@validation-rules required|string|max:255}
  * @property integer $gamer_count {@property-type field} {@validation-rules required|integer|gte:1}
  * @property integer $reward_points {@property-type field} {@validation-rules required|integer|gte:0}
  * @property Carbon $created_at {@property-type field}

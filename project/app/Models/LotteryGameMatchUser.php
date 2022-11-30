@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\CreatingLotteryGameMatchUserEvent;
 use App\Events\ValidatedLotteryGameMatchUserEvent;
 use Carbon\Carbon;
 use Egal\Model\Model as EgalModel;
@@ -26,7 +27,12 @@ class LotteryGameMatchUser extends EgalModel
     use HasRelationships;
 
     protected $dispatchesEvents = [
-        "validated" => ValidatedLotteryGameMatchUserEvent::class
+        "validated" => ValidatedLotteryGameMatchUserEvent::class,
+        "creating" => CreatingLotteryGameMatchUserEvent::class
+    ];
+
+    protected $fillable = [
+        "lottery_game_match_id"
     ];
 
     protected $hidden = [

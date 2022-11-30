@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property integer $id {@property-type field} {@primary-key} {@validation-rules integer|filled}
  * @property integer $game_id {@property-type field} {@validation-rules bail|required|integer|exists:lottery_games,id}
  * @property Carbon $start_date {@property-type field} {@validation-rules bail|required|date|after_or_equal:today|date_format:Y-m-d}
- * @property Carbon $start_time {@property-type field} {@validation-rules bail|required|date|date_format:H:i:s|after:now}
- * @property integer $winner_id {@property-type field} {@validation-rules bail|required|integer|exists:users,id}
+ * @property Carbon $start_time {@property-type field} {@validation-rules bail|required|date_format:H:i:s}
+ * @property integer $winner_id {@property-type field} {@validation-rules bail|integer|exists:users,id}
  * @property Carbon $created_at {@property-type field}
  * @property Carbon $updated_at {@property-type field}
  *
@@ -31,6 +31,12 @@ class LotteryGameMatch extends EgalModel
 
     use HasRelationships;
 
+    protected $fillable = [
+        'game_id',
+        'start_date',
+        'start_time'
+    ];
+
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -38,7 +44,7 @@ class LotteryGameMatch extends EgalModel
 
     public function game(): HasOne
     {
-        return $this->hasOne(LotteryGame::class);
+        return $this->hasOne(LotteryGame::class, 'id', 'game_id');
     }
 
     public function players(): HasMany

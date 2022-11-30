@@ -19,8 +19,8 @@ class CreateLotteryGameMatchesTable extends Migration
                 ->constrained('lottery_games')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->timestamp('start_date');
-            $table->timestamp('start_time');
+            $table->date('start_date');
+            $table->time('start_time');
             $table->foreignId('winner_id')
                 ->nullable()
                 ->constrained('users')

@@ -17,6 +17,7 @@ class UserFactory extends Factory
             "last_name" => $this->faker->lastName(),
             "email" => $this->faker->unique()->email(),
             "is_admin" => $this->faker->boolean(),
+            "password" => $this->faker->password(),
         ];
     }
 }
