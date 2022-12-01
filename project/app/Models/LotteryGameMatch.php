@@ -26,7 +26,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @property LotteryGame $game {@property-type relation}
  * @property Collection|LotteryGameMatchUser[] $players {@property-type relation}
- * @property User $winner {@property-type relation}
  *
  * @action getItems {@statuses-access logged|guest}
  * @action create {@statuses-access logged} {@roles-access admin}

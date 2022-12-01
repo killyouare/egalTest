@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property Carbon $created_at {@property-type field}
  * @property Carbon $updated_at {@property-type field}
  *
- * @property User $user {@property-type relation}
  * @property LotteryGameMatch $match {@property-type relation}
  *
  * @action create {@statuses-access logged} {@role-access user}

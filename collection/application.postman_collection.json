@@ -353,7 +353,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": {{createdId}},\n    \"attributes\": {\n        \"fist_name\": \"aboba\"\n    }\n}",
+							"raw": "{\n    \"id\": {{createdId}},\n    \"attributes\": {\n        \"first_name\": \"aboba\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -387,7 +387,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": {{createdId}},\n    \"attributes\": {\n        \"fist_name\": \"aboba\"\n    }\n}",
+									"raw": "{\n    \"id\": {{createdId}},\n    \"attributes\": {\n        \"first_name\": \"aboba\"\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -411,7 +411,7 @@
 							"_postman_previewlanguage": "json",
 							"header": null,
 							"cookie": [],
-							"body": "{\n    \"action\": {\n        \"type\": \"action\",\n        \"service_name\": \"application\",\n        \"model_name\": \"User\",\n        \"action_name\": \"update\",\n        \"parameters\": {\n            \"id\": 1,\n            \"attributes\": {\n                \"fist_name\": \"aboba\"\n            }\n        },\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoidXN0IiwiYXV0aF9pbmZvcm1hdGlvbiI6eyJpZCI6MSwiZmlyc3RfbmFtZSI6Ik1hdXJlZW4iLCJsYXN0X25hbWUiOiJMaXR0ZWwiLCJlbWFpbCI6IkFydHVyby5IYW1pbGwxMUB5YWhvby5jb20iLCJwb2ludHMiOjAsImF1dGhfaWRlbnRpZmljYXRpb24iOjEsInJvbGVzIjpbInVzZXIiXSwicGVybWlzc2lvbnMiOltdfSwiYWxpdmVfdW50aWwiOiIyMDIyLTExLTMwVDExOjM0OjI0LjQzOTE1NVoiLCJ0YXJnZXRfc2VydmljZV9uYW1lIjoiYXBwbGljYXRpb24ifQ.QF41s2RoKO14Ddezqzt3aLjYwpm3cvgKzf4bckzIIHs\",\n        \"uuid\": \"db193276-3e65-486b-9cf5-c72ed1fa43d6\"\n    },\n    \"action_result\": {\n        \"data\": {\n            \"id\": 1,\n            \"first_name\": \"Maureen\",\n            \"last_name\": \"Littel\",\n            \"email\": \"Arturo.Hamill11@yahoo.com\",\n            \"points\": 0\n        },\n        \"type\": \"action_result\",\n        \"uuid\": \"09bf2202-776b-4f63-a840-8276a3bfe47c\"\n    },\n    \"action_error\": null\n}"
+							"body": "{\n    \"action\": {\n        \"type\": \"action\",\n        \"service_name\": \"application\",\n        \"model_name\": \"User\",\n        \"action_name\": \"update\",\n        \"parameters\": {\n            \"id\": 1,\n            \"attributes\": {\n                \"first_name\": \"aboba\"\n            }\n        },\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoidXN0IiwiYXV0aF9pbmZvcm1hdGlvbiI6eyJpZCI6MSwiZmlyc3RfbmFtZSI6Ik1hdXJlZW4iLCJsYXN0X25hbWUiOiJMaXR0ZWwiLCJlbWFpbCI6IkFydHVyby5IYW1pbGwxMUB5YWhvby5jb20iLCJwb2ludHMiOjAsImF1dGhfaWRlbnRpZmljYXRpb24iOjEsInJvbGVzIjpbInVzZXIiXSwicGVybWlzc2lvbnMiOltdfSwiYWxpdmVfdW50aWwiOiIyMDIyLTExLTMwVDExOjM0OjI0LjQzOTE1NVoiLCJ0YXJnZXRfc2VydmljZV9uYW1lIjoiYXBwbGljYXRpb24ifQ.QF41s2RoKO14Ddezqzt3aLjYwpm3cvgKzf4bckzIIHs\",\n        \"uuid\": \"db193276-3e65-486b-9cf5-c72ed1fa43d6\"\n    },\n    \"action_result\": {\n        \"data\": {\n            \"id\": 1,\n            \"first_name\": \"Maureen\",\n            \"last_name\": \"Littel\",\n            \"email\": \"Arturo.Hamill11@yahoo.com\",\n            \"points\": 0\n        },\n        \"type\": \"action_result\",\n        \"uuid\": \"09bf2202-776b-4f63-a840-8276a3bfe47c\"\n    },\n    \"action_error\": null\n}"
 						}
 					]
 				},
