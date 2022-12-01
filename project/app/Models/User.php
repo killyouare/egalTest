@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Helpers\SessionHelper;
 use Carbon\Carbon;
 use Egal\Auth\Tokens\UserServiceToken;
 use Egal\AuthServiceDependencies\Exceptions\LoginException;
 use Egal\AuthServiceDependencies\Models\User as BaseUser;
+use Egal\Core\Session\Session;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasRelationships;
@@ -41,7 +43,6 @@ class User extends BaseUser
         "first_name",
         "last_name",
         "email",
-        "is_admin",
         "password"
     ];
 
@@ -49,7 +50,28 @@ class User extends BaseUser
         "password",
         "created_at",
         "updated_at",
+        "is_admin"
     ];
+
+    public function newQuery(): \Illuminate\Database\Eloquent\Builder|\Egal\Model\Builder
+    {
+        if (
+            !Session::isActionMessageExists()
+            || !Session::isUserServiceTokenExists()
+        ) {
+            return parent::newQuery();
+        }
+
+        if (!in_array('admin', SessionHelper::getUserRoles())) {
+            return parent::newQuery()->select([
+                "first_name",
+                "last_name",
+                "email"
+            ]);
+        }
+
+        return parent::newQuery();
+    }
 
     /**
      * @throws LoginException

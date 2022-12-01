@@ -11,4 +11,9 @@ class SessionHelper
     {
         return Session::getUserServiceToken()->getAuthInformation()['id'] ?? null;
     }
+
+    public static function getUserRoles(): array
+    {
+        return Session::getUserServiceToken()->getRoles();
+    }
 }

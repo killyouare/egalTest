@@ -17,7 +17,7 @@ services:
       RABBITMQ_HOST: ${PROJECT_NAME:-testtask}-rabbitmq
       RABBITMQ_USER: ${RABBITMQ_USERNAME:-admin}
       RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-password}
-      WAIT_HOSTS: ${PROJECT_NAME:-project}-rabbitmq:5672, ${PROJECT_NAME:-project}-database:5432
+      WAIT_HOSTS: ${PROJECT_NAME:-testtask}-rabbitmq:5672, ${PROJECT_NAME:-testtask}-database:5432
 
   rabbitmq:
     container_name: ${PROJECT_NAME:-testtask}-rabbitmq
@@ -34,10 +34,10 @@ services:
     environment:
       PROJECT_NAME: ${PROJECT_NAME:-testtask}
       APP_SERVICE_NAME: web
-      RABBITMQ_HOST: ${PROJECT_NAME:-project}-rabbitmq
+      RABBITMQ_HOST: ${PROJECT_NAME:-testtask}-rabbitmq
       RABBITMQ_USER: ${RABBITMQ_USERNAME:-admin}
       RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-password}
-      WAIT_HOSTS: ${PROJECT_NAME:-project}-rabbitmq:5672
+      WAIT_HOSTS: ${PROJECT_NAME:-testtask}-rabbitmq:5672
     ports:
       - "${APP_PORT:-80}:8080"
 
