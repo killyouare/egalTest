@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class LotteryGame extends EgalModel
 {
-
     use HasFactory;
     use HasRelationships;
 

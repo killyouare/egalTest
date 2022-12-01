@@ -34,7 +34,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class User extends BaseUser
 {
-
     use HasFactory;
     use HasRelationships;
 

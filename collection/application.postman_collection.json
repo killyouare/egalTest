@@ -7,10 +7,183 @@
 	},
 	"item": [
 		{
+			"name": "Helpers",
+			"item": [
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"try {",
+											"    pm.environment.set(\"userToken\", pm.response.json().action_result.data)",
+											"} catch (e) {",
+											"    console.log(e)",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"{{userEmail}}\",\n    \"password\": \"{{userPassword}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/{{applicationService}}/User/login",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"{{applicationService}}",
+										"User",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"try {",
+											"    pm.environment.set(\"adminToken\", pm.response.json().action_result.data)",
+											"} catch (e) {",
+											"    console.log(e)",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"{{adminEmail}}\",\n    \"password\": \"{{adminPassword}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/{{applicationService}}/User/login",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"{{applicationService}}",
+										"User",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "User",
 			"item": [
 				{
-					"name": "create",
+					"name": "getItems",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let getLowerCountId = () => {",
+									"    let items = pm.response.json().action_result.data.items;",
+									"    let lowerCountArray = [];",
+									"    let count = 2;",
+									"    do {",
+									"        lowerCountArray = items.filter(i => i.gamer_count == count);",
+									"        count++;",
+									"    } while (lowerCountArray.count == 0)",
+									"",
+									"    return lowerCountArray[0].id",
+									"}",
+									"try {",
+									"    pm.environment.set('lotteryGameId', getLowerCountId())",
+									"} catch (e) {",
+									"    console.log(e)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/{{applicationService}}/User/getItems",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{applicationService}}",
+								"User",
+								"getItems"
+							]
+						},
+						"description": "# Запрос на получение пользователей\n\n### Response:\n\n| Attribute | Description |\n| --- | --- |\n| data | список моделей пользователей |"
+					},
+					"response": [
+						{
+							"name": "успех",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/{{applicationService}}/User/getItems",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"{{applicationService}}",
+										"User",
+										"getItems"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"action\": {\n        \"type\": \"action\",\n        \"service_name\": \"application\",\n        \"model_name\": \"User\",\n        \"action_name\": \"getItems\",\n        \"parameters\": [],\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoidXN0IiwiYXV0aF9pbmZvcm1hdGlvbiI6eyJpZCI6MywiZmlyc3RfbmFtZSI6IkNvbGxpbiIsImxhc3RfbmFtZSI6IkJlYWhhbiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwicG9pbnRzIjoxNzc3NTE1MDcxLCJhdXRoX2lkZW50aWZpY2F0aW9uIjozLCJyb2xlcyI6WyJhZG1pbiJdLCJwZXJtaXNzaW9ucyI6W119LCJhbGl2ZV91bnRpbCI6IjIwMjItMTEtMzBUMTc6MDY6NTUuMTQwNzAzWiIsInRhcmdldF9zZXJ2aWNlX25hbWUiOiJhcHBsaWNhdGlvbiJ9.wBY4BDaLLJbYfeeXf-TwOFWCw0QNhaYnexCMkHff4AA\",\n        \"uuid\": \"80f50e8a-d69a-4e04-8f3b-32e3cc8538eb\"\n    },\n    \"action_result\": {\n        \"data\": {\n            \"items\": [\n                {\n                    \"id\": 2,\n                    \"first_name\": \"Skyla\",\n                    \"last_name\": \"Medhurst\",\n                    \"email\": \"user@user.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 5,\n                    \"first_name\": \"Jevon\",\n                    \"last_name\": \"Roob\",\n                    \"email\": \"corwin.archibald@zboncak.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 6,\n                    \"first_name\": \"Sadye\",\n                    \"last_name\": \"Parisian\",\n                    \"email\": \"tohara@muller.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 7,\n                    \"first_name\": \"Vincenza\",\n                    \"last_name\": \"Emard\",\n                    \"email\": \"wschmeler@davis.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 8,\n                    \"first_name\": \"Heloise\",\n                    \"last_name\": \"Jast\",\n                    \"email\": \"svon@mcglynn.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 9,\n                    \"first_name\": \"Cielo\",\n                    \"last_name\": \"Howell\",\n                    \"email\": \"pwalker@swift.net\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 10,\n                    \"first_name\": \"Jeanne\",\n                    \"last_name\": \"Franecki\",\n                    \"email\": \"michelle50@morissette.org\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 11,\n                    \"first_name\": \"Stanley\",\n                    \"last_name\": \"Hoppe\",\n                    \"email\": \"fpaucek@jaskolski.info\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 12,\n                    \"first_name\": \"Douglas\",\n                    \"last_name\": \"Prosacco\",\n                    \"email\": \"gusikowski.veda@huel.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 13,\n                    \"first_name\": \"Kaley\",\n                    \"last_name\": \"Schiller\",\n                    \"email\": \"christopher44@larson.net\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 14,\n                    \"first_name\": \"Craig\",\n                    \"last_name\": \"Cartwright\",\n                    \"email\": \"ratke.aurelie@harvey.org\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 15,\n                    \"first_name\": \"Odell\",\n                    \"last_name\": \"Bosco\",\n                    \"email\": \"jan71@yahoo.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 16,\n                    \"first_name\": \"Mozelle\",\n                    \"last_name\": \"Hegmann\",\n                    \"email\": \"zieme.edgar@lueilwitz.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 17,\n                    \"first_name\": \"Hayley\",\n                    \"last_name\": \"Maggio\",\n                    \"email\": \"michaela.stamm@smitham.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 18,\n                    \"first_name\": \"Euna\",\n                    \"last_name\": \"Klein\",\n                    \"email\": \"yasmeen83@gmail.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 19,\n                    \"first_name\": \"Carlie\",\n                    \"last_name\": \"Donnelly\",\n                    \"email\": \"dylan24@schiller.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 20,\n                    \"first_name\": \"Foster\",\n                    \"last_name\": \"Kerluke\",\n                    \"email\": \"nitzsche.skye@gmail.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 21,\n                    \"first_name\": \"Daphnee\",\n                    \"last_name\": \"Kohler\",\n                    \"email\": \"malinda47@hotmail.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 22,\n                    \"first_name\": \"Savanah\",\n                    \"last_name\": \"Lowe\",\n                    \"email\": \"dillan76@yahoo.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 23,\n                    \"first_name\": \"Korey\",\n                    \"last_name\": \"Abshire\",\n                    \"email\": \"qskiles@hotmail.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 3,\n                    \"first_name\": \"Collin\",\n                    \"last_name\": \"Beahan\",\n                    \"email\": \"admin@admin.com\",\n                    \"points\": 1777515071\n                },\n                {\n                    \"id\": 24,\n                    \"first_name\": \"Kylee\",\n                    \"last_name\": \"Ankunding\",\n                    \"email\": \"Makenzie_Wehner@hotmail.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 25,\n                    \"first_name\": \"Velda\",\n                    \"last_name\": \"Green\",\n                    \"email\": \"Bryon.Mitchell@hotmail.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 4,\n                    \"first_name\": \"Laury\",\n                    \"last_name\": \"Prohaska\",\n                    \"email\": \"crooks.nigel@hotmail.com\",\n                    \"points\": 1777515071\n                },\n                {\n                    \"id\": 26,\n                    \"first_name\": \"Andres\",\n                    \"last_name\": \"Barton\",\n                    \"email\": \"Keaton.Wisozk@gmail.com\",\n                    \"points\": 0\n                }\n            ]\n        },\n        \"type\": \"action_result\",\n        \"uuid\": \"98b81e07-29ab-4711-9719-44555190def5\"\n    },\n    \"action_error\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "register",
 					"event": [
 						{
 							"listen": "test",
@@ -41,14 +214,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/{{applicationService}}/User/create",
+							"raw": "{{host}}/{{applicationService}}/User/register",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"{{applicationService}}",
 								"User",
-								"create"
+								"register"
 							]
 						},
 						"description": "# Запрос на регистрацию пользователя\n\n### Request:\n\n| Attribute | Required |\n| --- | --- |\n| last_name | + |\n| first_name | + |\n| email | + |\n| password | + |\n\n\n### Response:\n\n| Attribute | Description |\n| --- | --- |\n| data | модель пользователя |"
@@ -69,14 +242,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/{{applicationService}}/User/create",
+									"raw": "{{host}}/{{applicationService}}/User/register",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
 										"{{applicationService}}",
 										"User",
-										"create"
+										"register"
 									]
 								}
 							},
@@ -331,83 +504,6 @@
 							"body": "{\n    \"action\": {\n        \"type\": \"action\",\n        \"service_name\": \"application\",\n        \"model_name\": \"User\",\n        \"action_name\": \"delete\",\n        \"parameters\": {\n            \"id\": 1\n        },\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoidXN0IiwiYXV0aF9pbmZvcm1hdGlvbiI6eyJpZCI6MSwiZmlyc3RfbmFtZSI6Ik1hdXJlZW4iLCJsYXN0X25hbWUiOiJMaXR0ZWwiLCJlbWFpbCI6IkFydHVyby5IYW1pbGwxMUB5YWhvby5jb20iLCJwb2ludHMiOjE3Nzc1MTUwNzEsImF1dGhfaWRlbnRpZmljYXRpb24iOjEsInJvbGVzIjpbInVzZXIiXSwicGVybWlzc2lvbnMiOltdfSwiYWxpdmVfdW50aWwiOiIyMDIyLTExLTMwVDE1OjA1OjAxLjc2OTY0MVoiLCJ0YXJnZXRfc2VydmljZV9uYW1lIjoiYXBwbGljYXRpb24ifQ.qTexju7ZsuZCLbKYrJddQl9SmiYFIkLZxfkVErsFcrc\",\n        \"uuid\": \"bd530bf2-b3a3-41f8-a5a6-3d9a04e254c9\"\n    },\n    \"action_result\": {\n        \"data\": {\n            \"message\": \"Entity deleted!\"\n        },\n        \"type\": \"action_result\",\n        \"uuid\": \"f9c8df8a-23f2-4b84-ac8b-0c3a22abfc50\"\n    },\n    \"action_error\": null\n}"
 						}
 					]
-				},
-				{
-					"name": "getItems",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"let getLowerCountId = () => {",
-									"    let items = pm.response.json().action_result.data.items;",
-									"    let lowerCountArray = [];",
-									"    let count = 2;",
-									"    do {",
-									"        lowerCountArray = items.filter(i => i.gamer_count == count);",
-									"        count++;",
-									"    } while (lowerCountArray.count == 0)",
-									"",
-									"    return lowerCountArray[0].id",
-									"}",
-									"try {",
-									"    pm.environment.set('lotteryGameId', getLowerCountId())",
-									"} catch (e) {",
-									"    console.log(e)",
-									"}"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{adminToken}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{host}}/{{applicationService}}/User/getItems",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"{{applicationService}}",
-								"User",
-								"getItems"
-							]
-						},
-						"description": "# Запрос на получение пользователей\n\n### Response:\n\n| Attribute | Description |\n| --- | --- |\n| data | список моделей пользователей |"
-					},
-					"response": [
-						{
-							"name": "успех",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{host}}/{{applicationService}}/User/getItems",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"{{applicationService}}",
-										"User",
-										"getItems"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": null,
-							"cookie": [],
-							"body": "{\n    \"action\": {\n        \"type\": \"action\",\n        \"service_name\": \"application\",\n        \"model_name\": \"User\",\n        \"action_name\": \"getItems\",\n        \"parameters\": [],\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoidXN0IiwiYXV0aF9pbmZvcm1hdGlvbiI6eyJpZCI6MywiZmlyc3RfbmFtZSI6IkNvbGxpbiIsImxhc3RfbmFtZSI6IkJlYWhhbiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwicG9pbnRzIjoxNzc3NTE1MDcxLCJhdXRoX2lkZW50aWZpY2F0aW9uIjozLCJyb2xlcyI6WyJhZG1pbiJdLCJwZXJtaXNzaW9ucyI6W119LCJhbGl2ZV91bnRpbCI6IjIwMjItMTEtMzBUMTc6MDY6NTUuMTQwNzAzWiIsInRhcmdldF9zZXJ2aWNlX25hbWUiOiJhcHBsaWNhdGlvbiJ9.wBY4BDaLLJbYfeeXf-TwOFWCw0QNhaYnexCMkHff4AA\",\n        \"uuid\": \"80f50e8a-d69a-4e04-8f3b-32e3cc8538eb\"\n    },\n    \"action_result\": {\n        \"data\": {\n            \"items\": [\n                {\n                    \"id\": 2,\n                    \"first_name\": \"Skyla\",\n                    \"last_name\": \"Medhurst\",\n                    \"email\": \"user@user.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 5,\n                    \"first_name\": \"Jevon\",\n                    \"last_name\": \"Roob\",\n                    \"email\": \"corwin.archibald@zboncak.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 6,\n                    \"first_name\": \"Sadye\",\n                    \"last_name\": \"Parisian\",\n                    \"email\": \"tohara@muller.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 7,\n                    \"first_name\": \"Vincenza\",\n                    \"last_name\": \"Emard\",\n                    \"email\": \"wschmeler@davis.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 8,\n                    \"first_name\": \"Heloise\",\n                    \"last_name\": \"Jast\",\n                    \"email\": \"svon@mcglynn.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 9,\n                    \"first_name\": \"Cielo\",\n                    \"last_name\": \"Howell\",\n                    \"email\": \"pwalker@swift.net\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 10,\n                    \"first_name\": \"Jeanne\",\n                    \"last_name\": \"Franecki\",\n                    \"email\": \"michelle50@morissette.org\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 11,\n                    \"first_name\": \"Stanley\",\n                    \"last_name\": \"Hoppe\",\n                    \"email\": \"fpaucek@jaskolski.info\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 12,\n                    \"first_name\": \"Douglas\",\n                    \"last_name\": \"Prosacco\",\n                    \"email\": \"gusikowski.veda@huel.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 13,\n                    \"first_name\": \"Kaley\",\n                    \"last_name\": \"Schiller\",\n                    \"email\": \"christopher44@larson.net\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 14,\n                    \"first_name\": \"Craig\",\n                    \"last_name\": \"Cartwright\",\n                    \"email\": \"ratke.aurelie@harvey.org\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 15,\n                    \"first_name\": \"Odell\",\n                    \"last_name\": \"Bosco\",\n                    \"email\": \"jan71@yahoo.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 16,\n                    \"first_name\": \"Mozelle\",\n                    \"last_name\": \"Hegmann\",\n                    \"email\": \"zieme.edgar@lueilwitz.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 17,\n                    \"first_name\": \"Hayley\",\n                    \"last_name\": \"Maggio\",\n                    \"email\": \"michaela.stamm@smitham.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 18,\n                    \"first_name\": \"Euna\",\n                    \"last_name\": \"Klein\",\n                    \"email\": \"yasmeen83@gmail.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 19,\n                    \"first_name\": \"Carlie\",\n                    \"last_name\": \"Donnelly\",\n                    \"email\": \"dylan24@schiller.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 20,\n                    \"first_name\": \"Foster\",\n                    \"last_name\": \"Kerluke\",\n                    \"email\": \"nitzsche.skye@gmail.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 21,\n                    \"first_name\": \"Daphnee\",\n                    \"last_name\": \"Kohler\",\n                    \"email\": \"malinda47@hotmail.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 22,\n                    \"first_name\": \"Savanah\",\n                    \"last_name\": \"Lowe\",\n                    \"email\": \"dillan76@yahoo.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 23,\n                    \"first_name\": \"Korey\",\n                    \"last_name\": \"Abshire\",\n                    \"email\": \"qskiles@hotmail.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 3,\n                    \"first_name\": \"Collin\",\n                    \"last_name\": \"Beahan\",\n                    \"email\": \"admin@admin.com\",\n                    \"points\": 1777515071\n                },\n                {\n                    \"id\": 24,\n                    \"first_name\": \"Kylee\",\n                    \"last_name\": \"Ankunding\",\n                    \"email\": \"Makenzie_Wehner@hotmail.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 25,\n                    \"first_name\": \"Velda\",\n                    \"last_name\": \"Green\",\n                    \"email\": \"Bryon.Mitchell@hotmail.com\",\n                    \"points\": 0\n                },\n                {\n                    \"id\": 4,\n                    \"first_name\": \"Laury\",\n                    \"last_name\": \"Prohaska\",\n                    \"email\": \"crooks.nigel@hotmail.com\",\n                    \"points\": 1777515071\n                },\n                {\n                    \"id\": 26,\n                    \"first_name\": \"Andres\",\n                    \"last_name\": \"Barton\",\n                    \"email\": \"Keaton.Wisozk@gmail.com\",\n                    \"points\": 0\n                }\n            ]\n        },\n        \"type\": \"action_result\",\n        \"uuid\": \"98b81e07-29ab-4711-9719-44555190def5\"\n    },\n    \"action_error\": null\n}"
-						}
-					]
 				}
 			],
 			"description": "# Модель пользователя\n\n### Attributes:\n\n| Attribute | Description | Attribute type |\n| --- | --- | --- |\n| first_name | Имя пользователя | string |\n| last_name | Фамилия пользователя | string |\n| email | Email пользователя | string |\n| password | Пароль пользователя | string |\n| is_admin | Роль пользователя | bool |\n\n### Endpoints:\n\n| Endpoints | Role access |\n| --- | --- |\n| register | guest |\n| login | guest |\n| update | user |\n| delete | user |\n| getItems | admin |"
@@ -507,6 +603,28 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const getString = (result) => {",
+									"    return String(result).length == 1 ? `0${result}` : result; ",
+									"}",
+									"",
+									"const getDate = () => {",
+									"    let date = new Date(Date.now() + 60000)",
+									"    let hours = getString(date.getUTCHours())",
+									"    let minutes = getString(date.getUTCMinutes())",
+									"    let seconds = getString(date.getUTCSeconds())",
+									"",
+									"    return [hours, minutes, seconds].join(\":\")",
+									"}",
+									"",
+									"pm.environment.set('time', getDate())"
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
@@ -520,7 +638,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"attributes\": {\n        \"game_id\": {{lotteryGameId}},\n        \"start_date\": \"2025-03-03\",\n        \"start_time\": \"19:00:00\"\n    }\n}",
+							"raw": "{\n    \"attributes\": {\n        \"game_id\": {{lotteryGameId}},\n        \"start_date\": \"2022-12-01\",\n        \"start_time\": \"{{time}}\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -759,6 +877,92 @@
 							{
 								"key": "Authorization",
 								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"attributes\": {\n        \"lottery_game_match_id\": {{gameId}}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{applicationService}}/LotteryGameMatchUser/create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{applicationService}}",
+								"LotteryGameMatchUser",
+								"create"
+							]
+						},
+						"description": "# Запрос на участие\n\n### Request:\n\n| Attribute | Required |\n| --- | --- |\n| lottery_game_match_id | + |\n\n### Response:\n\n| Attribute | Description |\n| --- | --- |\n| data | Модель табицы |"
+					},
+					"response": [
+						{
+							"name": "успех",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"attributes\": {\n        \"lottery_game_match_id\": {{gameId}}\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/{{applicationService}}/LotteryGameMatchUser/create",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"{{applicationService}}",
+										"LotteryGameMatchUser",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"action\": {\n        \"type\": \"action\",\n        \"service_name\": \"application\",\n        \"model_name\": \"LotteryGameMatchUser\",\n        \"action_name\": \"create\",\n        \"parameters\": {\n            \"attributes\": {\n                \"lottery_game_match_id\": 3\n            }\n        },\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoidXN0IiwiYXV0aF9pbmZvcm1hdGlvbiI6eyJpZCI6MjYsImZpcnN0X25hbWUiOiJBbmRyZXMiLCJsYXN0X25hbWUiOiJCYXJ0b24iLCJlbWFpbCI6IktlYXRvbi5XaXNvemtAZ21haWwuY29tIiwicG9pbnRzIjowLCJhdXRoX2lkZW50aWZpY2F0aW9uIjoyNiwicm9sZXMiOlsidXNlciJdLCJwZXJtaXNzaW9ucyI6W119LCJhbGl2ZV91bnRpbCI6IjIwMjItMTEtMzBUMTY6Mzk6MzkuNjAzMTQwWiIsInRhcmdldF9zZXJ2aWNlX25hbWUiOiJhcHBsaWNhdGlvbiJ9.4b5clJ3Ns-v0kEl41kbLvOFAWPR3kx_5Yvwh3aQvg5k\",\n        \"uuid\": \"77a2c1ed-b8b6-48e0-8c7e-fb2c8f5c4a53\"\n    },\n    \"action_result\": {\n        \"data\": {\n            \"lottery_game_match_id\": 3,\n            \"user_id\": 26,\n            \"id\": 6\n        },\n        \"type\": \"action_result\",\n        \"uuid\": \"bf3b5ea1-1113-4c2d-9905-9a00ff9da066\"\n    },\n    \"action_error\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "create userProf",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
 								"type": "text"
 							}
 						],

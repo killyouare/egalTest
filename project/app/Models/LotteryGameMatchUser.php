@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class LotteryGameMatchUser extends EgalModel
 {
-
     use HasRelationships;
 
     protected $dispatchesEvents = [

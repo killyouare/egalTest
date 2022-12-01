@@ -5,15 +5,19 @@ namespace App\Providers;
 
 use App\Events\CreatingLotteryGameMatchUserEvent;
 use App\Events\UpdatingLotteryGameMatchEvent;
+use App\Events\CreatingLotteryGameMatchEvent;
 use App\Events\ValidatedLotteryGameMatchUserEvent;
 use App\Listeners\AddPointsListener;
 use App\Listeners\AddUserToModelListener;
 use App\Listeners\ClosedMatchListener;
 use App\Listeners\CloseRequestValidationListener;
+use App\Listeners\ClosingMatchBeforeStartListener;
 use App\Listeners\GameClosedListener;
 use App\Listeners\OutOfGameParticipantsCountListener;
 use App\Listeners\PickWinnerListener;
+use App\Listeners\RegistrationForTheMatchBeforeStartListener;
 use App\Listeners\ReParticipationListener;
+use App\Listeners\ValidStartTimeListener;
 use Egal\Core\Events\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -23,7 +27,11 @@ class EventServiceProvider extends ServiceProvider
      * Определение обработчиков локальных событий
      */
     protected $listen = [
+        CreatingLotteryGameMatchEvent::class => [
+            ValidStartTimeListener::class,
+        ],
         ValidatedLotteryGameMatchUserEvent::class => [
+            RegistrationForTheMatchBeforeStartListener::class,
             ClosedMatchListener::class,
             ReParticipationListener::class,
             OutOfGameParticipantsCountListener::class,
@@ -33,6 +41,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         UpdatingLotteryGameMatchEvent::class => [
             CloseRequestValidationListener::class,
+            ClosingMatchBeforeStartListener::class,
             GameClosedListener::class,
             PickWinnerListener::class,
             AddPointsListener::class

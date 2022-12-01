@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Events\UpdatingLotteryGameMatchEvent;
+use App\Events\CreatingLotteryGameMatchEvent;
+use App\Helpers\Consts;
 use Carbon\Carbon;
 use Egal\Model\Exceptions\ObjectNotFoundException;
 use Egal\Model\Exceptions\UpdateException;
@@ -32,8 +34,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class LotteryGameMatch extends EgalModel
 {
-
     use HasRelationships;
+
+    protected $dispatchesEvents = [
+        "creating" => CreatingLotteryGameMatchEvent::class,
+    ];
 
     protected $fillable = [
         'game_id',
@@ -46,11 +51,6 @@ class LotteryGameMatch extends EgalModel
         'updated_at',
     ];
 
-    /**
-     * @throws ObjectNotFoundException
-     * @throws UpdateException
-     * @throws ValidateException
-     */
     public static function actionClose(array $attributes): string
     {
         event(new UpdatingLotteryGameMatchEvent($attributes));
@@ -76,5 +76,13 @@ class LotteryGameMatch extends EgalModel
     public function winner(): HasOne
     {
         return $this->hasOne(User::class, "id", "winner_id");
+    }
+
+    public function isGameStarted(): bool
+    {
+        $startDate = $this->getAttribute("start_date");
+        $startTime = $this->getAttribute("start_time");
+
+        return Carbon::now() <= Carbon::createFromFormat(Consts::DATETIME_FORMAT, "$startDate $startTime");
     }
 }

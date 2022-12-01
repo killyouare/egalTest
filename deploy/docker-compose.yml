@@ -3,25 +3,24 @@ version: "3.8"
 services:
 
   application:
-    container_name: ${PROJECT_NAME:-project}-application
+    container_name: ${PROJECT_NAME:-testtask}-application
     build:
       context: ../project
       args:
-        DEBUG: ${APP_DEBUG:-true}
-    volumes:
-      - ../project/:/app/
+        DEBUG: 'true'
     environment:
       APP_SERVICE_NAME: application
       APP_SERVICE_KEY: B#J5mUWKh8FqzQ6Tj0XtYruIcSwpb@ed
       DB_PASSWORD: ${DATABASE_PASSWORD:-password}
       DB_HOST: database
-      RABBITMQ_HOST: ${PROJECT_NAME:-project}-rabbitmq
+      DB_PORT: ${DATABASE_PORT:-5432}
+      RABBITMQ_HOST: ${PROJECT_NAME:-testtask}-rabbitmq
       RABBITMQ_USER: ${RABBITMQ_USERNAME:-admin}
       RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-password}
       WAIT_HOSTS: ${PROJECT_NAME:-project}-rabbitmq:5672, ${PROJECT_NAME:-project}-database:5432
 
   rabbitmq:
-    container_name: ${PROJECT_NAME:-project}-rabbitmq
+    container_name: ${PROJECT_NAME:-testtask}-rabbitmq
     image: ${RABBITMQ_TAG:-bitnami/rabbitmq:latest}
     environment:
       RABBITMQ_USERNAME: ${RABBITMQ_USERNAME:-admin}
@@ -29,25 +28,25 @@ services:
       RABBITMQ_PLUGINS: rabbitmq_management,rabbitmq_consistent_hash_exchange
 
   web-service:
-    container_name: ${PROJECT_NAME:-project}-web-service
+    container_name: ${PROJECT_NAME:-testtask}-web-service
     image: egalbox/web-service:2.2.1
     restart: on-failure
     environment:
-      PROJECT_NAME: ${PROJECT_NAME:-project}
+      PROJECT_NAME: ${PROJECT_NAME:-testtask}
       APP_SERVICE_NAME: web
       RABBITMQ_HOST: ${PROJECT_NAME:-project}-rabbitmq
       RABBITMQ_USER: ${RABBITMQ_USERNAME:-admin}
       RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-password}
       WAIT_HOSTS: ${PROJECT_NAME:-project}-rabbitmq:5672
     ports:
-      - "80:8080"
+      - "${APP_PORT:-80}:8080"
 
   database:
-    container_name: ${PROJECT_NAME:-project}-database
+    container_name: ${PROJECT_NAME:-testtask}-database
     image: egalbox/postgres:2.0.0
     restart: on-failure
     ports:
-      - "5432:5432"
+      - "${DATABASE_PORT:-5432}:5432"
     environment:
       POSTGRES_MULTIPLE_DATABASES: application
       POSTGRES_USER: ${DATABASE_USER:-postgres}
