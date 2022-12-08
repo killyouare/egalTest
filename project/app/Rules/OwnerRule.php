@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use Egal\Core\Session\Session;
+use App\Helpers\SessionHelper;
 use Egal\Validation\Rules\Rule as EgalRule;
 
 class OwnerRule extends EgalRule
@@ -10,7 +10,11 @@ class OwnerRule extends EgalRule
 
     public function validate($attribute, $value, $parameters = null): bool
     {
-        $userId = Session::getUserServiceToken()->getAuthInformation()['id'];
+        $userId = SessionHelper::getUserId();
+
+        if ($userId === null) {
+            return false;
+        }
 
         return $value === $userId;
     }

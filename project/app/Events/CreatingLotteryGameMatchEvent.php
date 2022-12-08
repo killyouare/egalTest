@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Helpers\AbstractEvent;
+use App\Abstracts\AbstractEvent;
 
 class CreatingLotteryGameMatchEvent extends AbstractEvent
 {

@@ -8,6 +8,7 @@ use Egal\Auth\Tokens\UserServiceToken;
 use Egal\AuthServiceDependencies\Exceptions\LoginException;
 use Egal\AuthServiceDependencies\Models\User as BaseUser;
 use Egal\Core\Session\Session;
+use Egal\Model\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasRelationships;
@@ -53,7 +54,39 @@ class User extends BaseUser
         "is_admin"
     ];
 
-    public function newQuery(): \Illuminate\Database\Eloquent\Builder|\Egal\Model\Builder
+    /**
+     * @throws LoginException
+     */
+    public static function actionLogin(string $email, string $password): string
+    {
+        /** @var BaseUser $user */
+        $user = self::query()
+            ->firstWhere('email', '=', $email);
+
+        if (!$user || !password_verify($password, $user->getAttribute('password'))) {
+            throw new LoginException('Incorrect Email or password!');
+        }
+
+        return $user->generateUST();
+    }
+
+    protected function generateUST(): string
+    {
+        $ust = new UserServiceToken();
+
+        $ust->setSigningKey(config('app.service_key'));
+        $ust->setAuthInformation($this->generateAuthInformation());
+        $ust->setTargetServiceName(config('app.service_name'));
+
+        return $ust->generateJWT();
+    }
+
+    public static function actionRegister(array $attributes = []): array
+    {
+        return parent::actionCreate($attributes);
+    }
+
+    public function newQuery(): \Illuminate\Database\Eloquent\Builder|Builder
     {
         if (
             !Session::isActionMessageExists()
@@ -73,25 +106,14 @@ class User extends BaseUser
         return parent::newQuery();
     }
 
-    /**
-     * @throws LoginException
-     */
-    public static function actionLogin(string $email, string $password): string
+    public function winningMatches(): HasMany
     {
-        /** @var BaseUser $user */
-        $user = self::query()
-            ->firstWhere('email', '=', $email);
-
-        if (!$user || !password_verify($password, $user->getAttribute('password'))) {
-            throw new LoginException('Incorrect Email or password!');
-        }
-
-        return $user->generateUST();
+        return $this->hasMany(LotteryGameMatch::class);
     }
 
-    public static function actionRegister(array $attributes = []): array
+    public function matches(): HasMany
     {
-        return parent::actionCreate($attributes);
+        return $this->hasMany(LotteryGameMatchUser::class);
     }
 
     protected function password(): Attribute
@@ -113,26 +135,5 @@ class User extends BaseUser
     protected function getPermissions(): array
     {
         return [];
-    }
-
-    public function winningMatches(): HasMany
-    {
-        return $this->hasMany(LotteryGameMatch::class);
-    }
-
-    public function matches(): HasMany
-    {
-        return $this->hasMany(LotteryGameMatchUser::class);
-    }
-
-    protected function generateUST(): string
-    {
-        $ust = new UserServiceToken();
-
-        $ust->setSigningKey(config('app.service_key'));
-        $ust->setAuthInformation($this->generateAuthInformation());
-        $ust->setTargetServiceName(config('app.service_name'));
-
-        return $ust->generateJWT();
     }
 }

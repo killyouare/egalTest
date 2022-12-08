@@ -2,21 +2,21 @@
 
 namespace App\Listeners;
 
-use App\Exceptions\ClosingMatchBeforeStartException;
-use App\Helpers\AbstractEvent;
-use App\Helpers\AbstractListener;
+use App\Abstracts\AbstractEvent;
+use App\Abstracts\AbstractListenerWithAttributes;
+use App\Exceptions\UpdatingException;
 
-class ClosingMatchBeforeStartListener extends AbstractListener
+class ClosingMatchBeforeStartListener extends AbstractListenerWithAttributes
 {
 
     /**
-     * @throws ClosingMatchBeforeStartException
+     * @throws UpdatingException
      */
     public function handle(AbstractEvent $event): void
     {
         if ($event->getModel()
             ->isGameStarted()) {
-            throw new ClosingMatchBeforeStartException();
+            throw new UpdatingException("You can't close a match before it starts");
         }
     }
 }

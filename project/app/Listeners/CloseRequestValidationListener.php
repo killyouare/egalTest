@@ -2,14 +2,14 @@
 
 namespace App\Listeners;
 
-use App\Helpers\AbstractEvent;
-use App\Helpers\AbstractListener;
+use App\Abstracts\AbstractEvent;
+use App\Abstracts\AbstractListenerWithAttributes;
 use App\Models\LotteryGameMatch;
 use Egal\Model\Exceptions\ObjectNotFoundException;
 use Egal\Model\Exceptions\UpdateException;
 use Egal\Model\Exceptions\ValidateException;
 
-class CloseRequestValidationListener extends AbstractListener
+class CloseRequestValidationListener extends AbstractListenerWithAttributes
 {
 
     /**

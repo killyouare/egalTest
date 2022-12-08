@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use App\Events\UpdatingLotteryGameMatchEvent;
+use App\Config\TimeFormatConsts;
 use App\Events\CreatingLotteryGameMatchEvent;
-use App\Helpers\Consts;
+use App\Events\UpdatingLotteryGameMatchEvent;
+use App\Helpers\TimeHelper;
 use Carbon\Carbon;
-use Egal\Model\Exceptions\ObjectNotFoundException;
-use Egal\Model\Exceptions\UpdateException;
-use Egal\Model\Exceptions\ValidateException;
 use Egal\Model\Model as EgalModel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasRelationships;
@@ -82,6 +80,6 @@ class LotteryGameMatch extends EgalModel
         $startDate = $this->getAttribute("start_date");
         $startTime = $this->getAttribute("start_time");
 
-        return Carbon::now() <= Carbon::createFromFormat(Consts::DATETIME_FORMAT, "$startDate $startTime");
+        return TimeHelper::isLaterThenNow("$startDate $startTime");
     }
 }

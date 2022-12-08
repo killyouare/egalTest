@@ -2,17 +2,18 @@
 
 namespace App\Listeners;
 
-use App\Exceptions\WinnerNotFoundException;
-use App\Helpers\AbstractEvent;
-use App\Helpers\AbstractListener;
+use App\Abstracts\AbstractEvent;
+use App\Abstracts\AbstractListenerWithAttributes;
+use App\Exceptions\UpdatingException;
 use App\Models\LotteryGameMatch;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
-class AddPointsListener extends AbstractListener
+class AddPointsListener extends AbstractListenerWithAttributes
 {
 
     /**
-     * @throws WinnerNotFoundException
+     * @throws UpdatingException
      */
     public function handle(AbstractEvent $event): void
     {
@@ -20,7 +21,9 @@ class AddPointsListener extends AbstractListener
         $lgm = $event->getModel();
 
         if (!$lgm->getAttribute('winner_id')) {
-            throw new WinnerNotFoundException();
+            DB::rollBack();
+
+            throw new UpdatingException("Winner not found");
         }
 
         /** @var int $rewardPoints */

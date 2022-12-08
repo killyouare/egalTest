@@ -2,28 +2,32 @@
 
 namespace App\Listeners;
 
-use App\Exceptions\NoMembersException;
-use App\Helpers\AbstractEvent;
-use App\Helpers\AbstractListener;
+use App\Abstracts\AbstractEvent;
+use App\Abstracts\AbstractListenerWithAttributes;
+use App\Exceptions\UpdatingException;
 use App\Models\LotteryGameMatch;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
-class PickWinnerListener extends AbstractListener
+class PickWinnerListener extends AbstractListenerWithAttributes
 {
 
     /**
-     * @throws NoMembersException
+     * @throws UpdatingException
      */
     public function handle(AbstractEvent $event): void
     {
         /** @var LotteryGameMatch $lgm */
         $lgm = $event->getModel();
 
-        /** @var \Illuminate\Database\Eloquent\Collection $players */
+        /** @var Collection $players */
         $players = $lgm->players()
             ->getResults();
 
-        if (!$players->count()) {
-            throw new NoMembersException();
+        if ($players->count() === 0) {
+            DB::rollBack();
+
+            throw new UpdatingException("The game has no members");
         }
 
         $lgm->setAttribute("winner_id", $players->random()->user_id);

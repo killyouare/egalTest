@@ -2,24 +2,25 @@
 
 namespace App\Listeners;
 
-use App\Exceptions\RegistrationForTheMatchBeforeStartException;
-use App\Helpers\AbstractEvent;
-use App\Helpers\AbstractListener;
+use App\Abstracts\AbstractEvent;
+use App\Abstracts\AbstractListenerWithAttributes;
+use App\Exceptions\ValidatedException;
 use App\Models\LotteryGameMatch;
 
-class RegistrationForTheMatchBeforeStartListener extends AbstractListener
+class RegistrationForTheMatchBeforeStartListener extends AbstractListenerWithAttributes
 {
 
     /**
-     * @throws RegistrationForTheMatchBeforeStartException
+     * @throws ValidatedException
      */
     public function handle(AbstractEvent $event): void
     {
-        if (LotteryGameMatch::query()
-            ->find($event->getAttribute("lottery_game_match_id"))
-            ->isGameStarted()
+        if (
+            LotteryGameMatch::query()
+                ->find($event->getAttribute("lottery_game_match_id"))
+                ->isGameStarted()
         ) {
-            throw new RegistrationForTheMatchBeforeStartException();
+            throw new ValidatedException("You cannot register for a match before it starts.");
         }
     }
 }

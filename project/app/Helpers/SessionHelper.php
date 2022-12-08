@@ -7,13 +7,13 @@ use Egal\Core\Session\Session;
 class SessionHelper
 {
 
-    public static function getUserId(): int|null
+    public static function getUserId(): ?int
     {
         return Session::getUserServiceToken()->getAuthInformation()['id'] ?? null;
     }
 
-    public static function getUserRoles(): array
+    public static function getUserRoles(): ?array
     {
-        return Session::getUserServiceToken()->getRoles();
+        return Session::getUserServiceToken()->getRoles() ?? null;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Config;
 
-class Consts
+class TimeFormatConsts
 {
     public const DATE_FORMAT = "Y-m-d";
     public const TIME_FORMAT = "H:i:s";

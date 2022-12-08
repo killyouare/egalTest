@@ -2,20 +2,20 @@
 
 namespace App\Listeners;
 
-use App\Exceptions\GameClosedException;
-use App\Helpers\AbstractEvent;
-use App\Helpers\AbstractListener;
+use App\Abstracts\AbstractEvent;
+use App\Abstracts\AbstractListenerWithAttributes;
+use App\Exceptions\UpdatingException;
 
-class GameClosedListener extends AbstractListener
+class GameClosedListener extends AbstractListenerWithAttributes
 {
 
     /**
-     * @throws GameClosedException
+     * @throws UpdatingException
      */
     public function handle(AbstractEvent $event): void
     {
         if ($event->getAttribute("winner_id")) {
-            throw new GameClosedException();
+            throw new UpdatingException("The game is already closed");
         }
     }
 }

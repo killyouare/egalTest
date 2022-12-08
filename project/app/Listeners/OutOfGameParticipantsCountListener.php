@@ -2,16 +2,16 @@
 
 namespace App\Listeners;
 
-use App\Exceptions\OutOfGameParticipantsCountException;
-use App\Helpers\AbstractEvent;
-use App\Helpers\AbstractListener;
+use App\Abstracts\AbstractEvent;
+use App\Abstracts\AbstractListenerWithAttributes;
+use App\Exceptions\ValidatedException;
 use App\Models\LotteryGameMatch;
 
-class OutOfGameParticipantsCountListener extends AbstractListener
+class OutOfGameParticipantsCountListener extends AbstractListenerWithAttributes
 {
 
     /**
-     * @throws OutOfGameParticipantsCountException
+     * @throws ValidatedException
      */
     public function handle(AbstractEvent $event): void
     {
@@ -27,7 +27,7 @@ class OutOfGameParticipantsCountListener extends AbstractListener
             ->toArray();
 
         if (count($lgm['players']) >= $lgm['game']['gamer_count']) {
-            throw new OutOfGameParticipantsCountException();
+            throw new ValidatedException("All places are filled");
         }
     }
 }

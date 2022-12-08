@@ -2,17 +2,16 @@
 
 namespace App\Listeners;
 
-use App\Exceptions\ClosingMatchBeforeStartException;
-use App\Exceptions\CreateGameException;
-use App\Helpers\AbstractEvent;
-use App\Helpers\AbstractListener;
+use App\Abstracts\AbstractEvent;
+use App\Abstracts\AbstractListenerWithAttributes;
+use App\Exceptions\CreatingException;
 use Carbon\Carbon;
 
-class ValidStartTimeListener extends AbstractListener
+class ValidStartTimeListener extends AbstractListenerWithAttributes
 {
 
     /**
-     * @throws CreateGameException
+     * @throws CreatingException
      */
     public function handle(AbstractEvent $event): void
     {
@@ -20,7 +19,7 @@ class ValidStartTimeListener extends AbstractListener
             Carbon::now()->toDateString() === $event->getAttribute("start_date")
             && !$event->getModel()->isGameStarted()
         ) {
-            throw new CreateGameException();
+            throw new CreatingException("You cannot create a game that starts earlier than now");
         }
     }
 }

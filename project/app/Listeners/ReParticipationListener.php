@@ -2,28 +2,28 @@
 
 namespace App\Listeners;
 
-use App\Exceptions\ReParticipationException;
-use App\Helpers\AbstractEvent;
-use App\Helpers\AbstractListener;
+use App\Abstracts\AbstractEvent;
+use App\Abstracts\AbstractListenerWithAttributes;
+use App\Exceptions\ValidatedException;
 use App\Helpers\SessionHelper;
 use App\Models\LotteryGameMatchUser;
 
-class ReParticipationListener extends AbstractListener
+class ReParticipationListener extends AbstractListenerWithAttributes
 {
 
     /**
-     * @throws ReParticipationException
+     * @throws ValidatedException
      */
     public function handle(AbstractEvent $event): void
     {
-        $name = 'lottery_game_match_id';
-
         if (LotteryGameMatchUser::query()
-            ->where([
-                'user_id' => SessionHelper::getUserId(),
-                $name => $event->getAttribute($name)
-            ])->first()) {
-            throw new ReParticipationException();
+            ->where(
+                [
+                    'user_id' => SessionHelper::getUserId(),
+                    'lottery_game_match_id' => $event->getAttribute('lottery_game_match_id')
+                ]
+            )->first()) {
+            throw new ValidatedException("You can't participate twice");
         }
     }
 }

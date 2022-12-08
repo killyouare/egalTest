@@ -2,25 +2,27 @@
 
 namespace App\Listeners;
 
-use App\Exceptions\GameClosedException;
-use App\Helpers\AbstractEvent;
-use App\Helpers\AbstractListener;
+use App\Abstracts\AbstractEvent;
+use App\Abstracts\AbstractListenerWithAttributes;
 use App\Models\LotteryGameMatch;
+use Egal\Model\Exceptions\ValidateException;
 
-class ClosedMatchListener extends AbstractListener
+class ClosedMatchListener extends AbstractListenerWithAttributes
 {
 
     /**
-     * @throws GameClosedException
+     * @throws ValidateException
      */
     public function handle(AbstractEvent $event): void
     {
         if (!LotteryGameMatch::query()
-            ->where([
-                "id" => $event->getAttribute("lottery_game_match_id"),
-                "winner_id" => null
-            ])->first()) {
-            throw new GameClosedException();
+            ->where(
+                [
+                    "id" => $event->getAttribute("lottery_game_match_id"),
+                    "winner_id" => null,
+                ]
+            )->first()) {
+            throw new ValidateException();
         }
     }
 

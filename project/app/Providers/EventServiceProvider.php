@@ -3,15 +3,17 @@
 
 namespace App\Providers;
 
+use App\Events\CreatingLotteryGameMatchEvent;
 use App\Events\CreatingLotteryGameMatchUserEvent;
 use App\Events\UpdatingLotteryGameMatchEvent;
-use App\Events\CreatingLotteryGameMatchEvent;
 use App\Events\ValidatedLotteryGameMatchUserEvent;
 use App\Listeners\AddPointsListener;
 use App\Listeners\AddUserToModelListener;
+use App\Listeners\BeginTransactionListener;
 use App\Listeners\ClosedMatchListener;
 use App\Listeners\CloseRequestValidationListener;
 use App\Listeners\ClosingMatchBeforeStartListener;
+use App\Listeners\CommitTransactionListener;
 use App\Listeners\GameClosedListener;
 use App\Listeners\OutOfGameParticipantsCountListener;
 use App\Listeners\PickWinnerListener;
@@ -43,8 +45,10 @@ class EventServiceProvider extends ServiceProvider
             CloseRequestValidationListener::class,
             ClosingMatchBeforeStartListener::class,
             GameClosedListener::class,
+            BeginTransactionListener::class,
             PickWinnerListener::class,
-            AddPointsListener::class
+            AddPointsListener::class,
+            CommitTransactionListener::class,
         ]
     ];
 }

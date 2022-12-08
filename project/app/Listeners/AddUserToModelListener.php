@@ -2,13 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Helpers\AbstractEvent;
-use App\Helpers\AbstractListener;
+use App\Abstracts\AbstractEvent;
+use App\Abstracts\AbstractListenerWithAttributes;
 use App\Helpers\SessionHelper;
-use App\Models\User;
 use Egal\AuthServiceDependencies\Exceptions\UserNotIdentifiedException;
 
-class AddUserToModelListener extends AbstractListener
+class AddUserToModelListener extends AbstractListenerWithAttributes
 {
 
     /**
