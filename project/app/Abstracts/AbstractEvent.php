@@ -2,10 +2,10 @@
 
 namespace App\Abstracts;
 
-use Egal\Core\Events\Event;
+use Egal\Core\Events\Event as EgalEvent;
 use Egal\Model\Model;
 
-abstract class AbstractEvent extends Event
+abstract class AbstractEvent extends EgalEvent implements Event
 {
 
     private Model $model;
@@ -18,6 +18,16 @@ abstract class AbstractEvent extends Event
     public function getAttributes(): array
     {
         return $this->getModel()->getAttributes();
+    }
+
+    public function getModel(): Model
+    {
+        return $this->model;
+    }
+
+    public function setModel(Model $model): void
+    {
+        $this->model = $model;
     }
 
     public function getAttribute(string $name): mixed
@@ -37,16 +47,6 @@ abstract class AbstractEvent extends Event
 
     protected function isSetModel(): bool
     {
-        return $this->getModel() !== null;
-    }
-
-    public function getModel(): Model
-    {
-        return $this->model;
-    }
-
-    public function setModel(Model $model): void
-    {
-        $this->model = $model;
+        return $this->model !== null;
     }
 }

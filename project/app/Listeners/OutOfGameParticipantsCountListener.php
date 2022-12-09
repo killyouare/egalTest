@@ -16,14 +16,16 @@ class OutOfGameParticipantsCountListener extends AbstractListenerWithAttributes
     public function handle(AbstractEvent $event): void
     {
         $lgm = LotteryGameMatch::query()
-            ->where([
-                'id' => $event->getAttribute('lottery_game_match_id')
-            ])
-            ->with([
-                "game",
-                "players"
-            ])
-            ->first()
+            ->where(
+                [
+                    'id' => $event->getAttribute('lottery_game_match_id')
+                ]
+            )->with(
+                [
+                    "game",
+                    "players"
+                ]
+            )->first()
             ->toArray();
 
         if (count($lgm['players']) >= $lgm['game']['gamer_count']) {

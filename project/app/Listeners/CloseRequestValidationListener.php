@@ -31,7 +31,7 @@ class CloseRequestValidationListener extends AbstractListenerWithAttributes
 
         $instance->validateKey($id);
 
-        /** @var LotteryGameMatch $item */
+        /** @var ?LotteryGameMatch $item */
         $item = $instance->query()
             ->find($id);
 

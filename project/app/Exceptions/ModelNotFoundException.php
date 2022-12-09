@@ -6,5 +6,5 @@ use Egal\Model\Exceptions\NotFoundException;
 
 class ModelNotFoundException extends NotFoundException
 {
-    protected $message = "Model not found";
+    protected $message = "Event model is not found";
 }

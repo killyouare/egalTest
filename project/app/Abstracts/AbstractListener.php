@@ -5,5 +5,5 @@ namespace App\Abstracts;
 abstract class AbstractListener
 {
 
-    abstract public function handle(Event $event): void;
+    abstract public function handle(AbstractEvent $event): void;
 }

@@ -22,7 +22,7 @@ abstract class AbstractEventWithAttributes extends AbstractEvent implements Even
         if (!$this->isSetModel()) {
             throw new ModelNotFoundException();
         }
-        dd(123);
+
         return parent::getModel();
     }
 
