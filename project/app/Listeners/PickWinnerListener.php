@@ -2,20 +2,22 @@
 
 namespace App\Listeners;
 
-use App\Abstracts\AbstractEvent;
-use App\Abstracts\AbstractListenerWithAttributes;
+use App\Abstracts\EventAttributes;
+use App\Abstracts\ListenerAttributes;
+use App\Exceptions\ModelNotFoundException;
 use App\Exceptions\UpdatingException;
+use App\Helpers\TransactionHelper;
 use App\Models\LotteryGameMatch;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 
-class PickWinnerListener extends AbstractListenerWithAttributes
+class PickWinnerListener extends ListenerAttributes
 {
 
     /**
-     * @throws UpdatingException
+     * @throws UpdatingException|ModelNotFoundException
      */
-    public function handle(AbstractEvent $event): void
+    public function handle(EventAttributes $event): void
     {
         /** @var LotteryGameMatch $lgm */
         $lgm = $event->getModel();
@@ -25,12 +27,17 @@ class PickWinnerListener extends AbstractListenerWithAttributes
             ->getResults();
 
         if ($players->count() === 0) {
-            DB::rollBack();
-
             throw new UpdatingException("The game has no members");
         }
 
-        $lgm->setAttribute("winner_id", $players->random()->user_id);
-        $lgm->save();
+        try {
+            $lgm->setAttribute("winner_id", $players->random()->user_id);
+
+            $lgm->save();
+        } catch (Exception) {
+            TransactionHelper::rollback();
+
+            throw new UpdatingException("can't pick a winner");
+        }
     }
 }

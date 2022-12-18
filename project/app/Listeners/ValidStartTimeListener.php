@@ -2,18 +2,19 @@
 
 namespace App\Listeners;
 
-use App\Abstracts\AbstractEvent;
-use App\Abstracts\AbstractListenerWithAttributes;
+use App\Abstracts\EventModel;
+use App\Abstracts\IEvent;
+use App\Abstracts\ListenerModel;
 use App\Exceptions\CreatingException;
 use Carbon\Carbon;
 
-class ValidStartTimeListener extends AbstractListenerWithAttributes
+class ValidStartTimeListener extends ListenerModel
 {
 
     /**
      * @throws CreatingException
      */
-    public function handle(AbstractEvent $event): void
+    public function handle(EventModel $event): void
     {
         if (
             Carbon::now()->toDateString() === $event->getAttribute("start_date")

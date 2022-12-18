@@ -2,17 +2,18 @@
 
 namespace App\Listeners;
 
-use App\Abstracts\AbstractEvent;
-use App\Abstracts\AbstractListenerWithAttributes;
+use App\Abstracts\EventAttributes;
+use App\Abstracts\ListenerAttributes;
+use App\Exceptions\ModelNotFoundException;
 use App\Exceptions\UpdatingException;
 
-class ClosingMatchBeforeStartListener extends AbstractListenerWithAttributes
+class ClosingMatchBeforeStartListener extends ListenerAttributes
 {
 
     /**
-     * @throws UpdatingException
+     * @throws UpdatingException|ModelNotFoundException
      */
-    public function handle(AbstractEvent $event): void
+    public function handle(EventAttributes $event): void
     {
         if ($event->getModel()
             ->isGameStarted()) {

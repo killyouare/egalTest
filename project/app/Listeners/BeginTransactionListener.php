@@ -2,15 +2,15 @@
 
 namespace App\Listeners;
 
-use App\Abstracts\AbstractEvent;
-use App\Abstracts\AbstractListener;
-use Illuminate\Support\Facades\DB;
+use App\Abstracts\Event;
+use App\Abstracts\Listener;
+use App\Helpers\TransactionHelper;
 
-class BeginTransactionListener extends AbstractListener
+class BeginTransactionListener extends Listener
 {
 
-    public function handle(AbstractEvent $event): void
+    public function handle(Event $event): void
     {
-        DB::beginTransaction();
+        TransactionHelper::beginTransaction();
     }
 }

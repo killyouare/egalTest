@@ -2,8 +2,8 @@
 
 namespace App\Events;
 
-use App\Abstracts\AbstractEvent;
+use App\Abstracts\EventModel;
 
-class CreatingLotteryGameMatchUserEvent extends AbstractEvent
+class CreatingLotteryGameMatchUserEvent extends EventModel
 {
 }

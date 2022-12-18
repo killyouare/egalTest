@@ -2,8 +2,8 @@
 
 namespace App\Events;
 
-use App\Abstracts\AbstractEventWithAttributes;
+use App\Abstracts\EventAttributes;
 
-class UpdatingLotteryGameMatchEvent extends AbstractEventWithAttributes
+class UpdatingLotteryGameMatchEvent extends EventAttributes
 {
 }

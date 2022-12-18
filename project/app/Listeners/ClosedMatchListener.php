@@ -2,18 +2,18 @@
 
 namespace App\Listeners;
 
-use App\Abstracts\AbstractEvent;
-use App\Abstracts\AbstractListenerWithAttributes;
+use App\Abstracts\EventModel;
+use App\Abstracts\ListenerModel;
 use App\Models\LotteryGameMatch;
 use Egal\Model\Exceptions\ValidateException;
 
-class ClosedMatchListener extends AbstractListenerWithAttributes
+class ClosedMatchListener extends ListenerModel
 {
 
     /**
      * @throws ValidateException
      */
-    public function handle(AbstractEvent $event): void
+    public function handle(EventModel $event): void
     {
         if (!LotteryGameMatch::query()
             ->where(

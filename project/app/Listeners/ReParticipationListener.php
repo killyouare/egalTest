@@ -2,19 +2,20 @@
 
 namespace App\Listeners;
 
-use App\Abstracts\AbstractEvent;
-use App\Abstracts\AbstractListenerWithAttributes;
+use App\Abstracts\EventModel;
+use App\Abstracts\IEvent;
+use App\Abstracts\ListenerModel;
 use App\Exceptions\ValidatedException;
 use App\Helpers\SessionHelper;
 use App\Models\LotteryGameMatchUser;
 
-class ReParticipationListener extends AbstractListenerWithAttributes
+class ReParticipationListener extends ListenerModel
 {
 
     /**
      * @throws ValidatedException
      */
-    public function handle(AbstractEvent $event): void
+    public function handle(EventModel $event): void
     {
         if (LotteryGameMatchUser::query()
             ->where(

@@ -15,6 +15,7 @@ use App\Listeners\CloseRequestValidationListener;
 use App\Listeners\ClosingMatchBeforeStartListener;
 use App\Listeners\CommitTransactionListener;
 use App\Listeners\GameClosedListener;
+use App\Listeners\LockTableLotteryGameMatchUserInExclusiveModeListener;
 use App\Listeners\OutOfGameParticipantsCountListener;
 use App\Listeners\PickWinnerListener;
 use App\Listeners\RegistrationForTheMatchBeforeStartListener;
@@ -36,7 +37,10 @@ class EventServiceProvider extends ServiceProvider
             RegistrationForTheMatchBeforeStartListener::class,
             ClosedMatchListener::class,
             ReParticipationListener::class,
+            BeginTransactionListener::class,
+            LockTableLotteryGameMatchUserInExclusiveModeListener::class,
             OutOfGameParticipantsCountListener::class,
+            CommitTransactionListener::class,
         ],
         CreatingLotteryGameMatchUserEvent::class => [
             AddUserToModelListener::class

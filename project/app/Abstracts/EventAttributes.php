@@ -5,9 +5,9 @@ namespace App\Abstracts;
 use App\Exceptions\ModelNotFoundException;
 use Egal\Model\Model;
 
-abstract class AbstractEventWithAttributes extends AbstractEvent implements EventWithAttributes
+abstract class EventAttributes extends Event
 {
-    private array $attributes;
+    protected array $attributes;
 
     public function __construct(array $value)
     {
@@ -23,7 +23,7 @@ abstract class AbstractEventWithAttributes extends AbstractEvent implements Even
             throw new ModelNotFoundException();
         }
 
-        return parent::getModel();
+        return $this->model;
     }
 
     public function getEventAttributes(): array

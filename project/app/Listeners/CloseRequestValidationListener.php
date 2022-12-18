@@ -2,14 +2,15 @@
 
 namespace App\Listeners;
 
-use App\Abstracts\AbstractEvent;
-use App\Abstracts\AbstractListenerWithAttributes;
+use App\Abstracts\EventAttributes;
+use App\Abstracts\IEventWithAttributes;
+use App\Abstracts\ListenerAttributes;
 use App\Models\LotteryGameMatch;
 use Egal\Model\Exceptions\ObjectNotFoundException;
 use Egal\Model\Exceptions\UpdateException;
 use Egal\Model\Exceptions\ValidateException;
 
-class CloseRequestValidationListener extends AbstractListenerWithAttributes
+class CloseRequestValidationListener extends ListenerAttributes
 {
 
     /**
@@ -17,7 +18,7 @@ class CloseRequestValidationListener extends AbstractListenerWithAttributes
      * @throws ObjectNotFoundException
      * @throws UpdateException
      */
-    public function handle(AbstractEvent $event): void
+    public function handle(EventAttributes $event): void
     {
         $attributes = $event->getEventAttributes();
 
