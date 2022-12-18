@@ -7,6 +7,7 @@ use Egal\Model\Model;
 
 abstract class EventAttributes extends Event
 {
+
     protected array $attributes;
 
     public function __construct(array $value)

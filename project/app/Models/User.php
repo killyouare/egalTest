@@ -86,7 +86,7 @@ class User extends BaseUser
         return parent::actionCreate($attributes);
     }
 
-    public function newQuery(): \Illuminate\Database\Eloquent\Builder|Builder
+    public function newQuery(): Builder
     {
         if (
             !Session::isActionMessageExists()

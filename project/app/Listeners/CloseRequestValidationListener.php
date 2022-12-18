@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use App\Abstracts\EventAttributes;
-use App\Abstracts\IEventWithAttributes;
 use App\Abstracts\ListenerAttributes;
 use App\Models\LotteryGameMatch;
 use Egal\Model\Exceptions\ObjectNotFoundException;
@@ -14,9 +13,7 @@ class CloseRequestValidationListener extends ListenerAttributes
 {
 
     /**
-     * @throws ValidateException
-     * @throws ObjectNotFoundException
-     * @throws UpdateException
+     * @throws ObjectNotFoundException|UpdateException|ValidateException
      */
     public function handle(EventAttributes $event): void
     {

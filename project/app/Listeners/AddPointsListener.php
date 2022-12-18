@@ -3,8 +3,6 @@
 namespace App\Listeners;
 
 use App\Abstracts\EventAttributes;
-use App\Abstracts\IEvent;
-use App\Abstracts\IEventWithAttributes;
 use App\Abstracts\ListenerAttributes;
 use App\Exceptions\ModelNotFoundException;
 use App\Exceptions\UpdatingException;
@@ -19,7 +17,6 @@ class AddPointsListener extends ListenerAttributes
 
     /**
      * @throws UpdatingException|ModelNotFoundException
-     * @throws Exception
      */
     public function handle(EventAttributes $event): void
     {
@@ -43,6 +40,7 @@ class AddPointsListener extends ListenerAttributes
 
         try {
             $user->setAttribute("points", $user->getAttribute("points") + $rewardPoints);
+
             $user->save();
         } catch (Exception) {
             TransactionHelper::rollback();

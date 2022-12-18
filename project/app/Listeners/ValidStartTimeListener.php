@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use App\Abstracts\EventModel;
-use App\Abstracts\IEvent;
 use App\Abstracts\ListenerModel;
 use App\Exceptions\CreatingException;
 use Carbon\Carbon;

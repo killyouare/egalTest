@@ -3,8 +3,6 @@
 namespace App\Listeners;
 
 use App\Abstracts\EventAttributes;
-use App\Abstracts\IEvent;
-use App\Abstracts\IEventWithAttributes;
 use App\Abstracts\ListenerAttributes;
 use App\Exceptions\UpdatingException;
 
