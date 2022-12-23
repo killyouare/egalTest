@@ -2,14 +2,14 @@
 
 namespace App\Helpers;
 
-enum Lockmode
+enum Lockmode: string
 {
-    case AccessShare;
-    case RowShare;
-    case RowExclusive;
-    case ShareUpdateExclusive;
-    case Share;
-    case ShareRowExclusive;
-    case Exclusive;
-    case AccessExclusive;
+    case AccessShare = "ACCESS SHARE";
+    case RowShare = "ROW SHARE";
+    case RowExclusive = "ROW EXCLUSIVE";
+    case ShareUpdateExclusive = "SHARE UPDATE EXCLUSIVE";
+    case Share = "SHARE";
+    case ShareRowExclusive = "SHARE ROW EXCLUSIVE";
+    case Exclusive = "EXCLUSIVE";
+    case AccessExclusive = "ACCESS EXCLUSIVE";
 }

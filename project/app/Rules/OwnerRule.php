@@ -12,7 +12,7 @@ class OwnerRule extends EgalRule
     {
         $userId = SessionHelper::getUserId();
 
-        if ($userId === null) {
+        if (is_null($userId)) {
             return false;
         }
 

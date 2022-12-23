@@ -11,7 +11,6 @@ use App\Listeners\AddPointsListener;
 use App\Listeners\AddUserToModelListener;
 use App\Listeners\BeginTransactionListener;
 use App\Listeners\ClosedMatchListener;
-use App\Listeners\CloseRequestValidationListener;
 use App\Listeners\ClosingMatchBeforeStartListener;
 use App\Listeners\CommitTransactionListener;
 use App\Listeners\GameClosedListener;
@@ -46,7 +45,6 @@ class EventServiceProvider extends ServiceProvider
             AddUserToModelListener::class
         ],
         UpdatingLotteryGameMatchEvent::class => [
-            CloseRequestValidationListener::class,
             ClosingMatchBeforeStartListener::class,
             GameClosedListener::class,
             BeginTransactionListener::class,

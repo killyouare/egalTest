@@ -2,22 +2,21 @@
 
 namespace App\Listeners;
 
-use App\Abstracts\EventAttributes;
-use App\Abstracts\ListenerAttributes;
-use App\Exceptions\ModelNotFoundException;
+use App\Abstracts\EventModel;
+use App\Abstracts\ListenerModel;
 use App\Exceptions\UpdatingException;
 use App\Helpers\TransactionHelper;
 use App\Models\LotteryGameMatch;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 
-class PickWinnerListener extends ListenerAttributes
+class PickWinnerListener extends ListenerModel
 {
 
     /**
-     * @throws UpdatingException|ModelNotFoundException
+     * @throws UpdatingException
      */
-    public function handle(EventAttributes $event): void
+    public function handle(EventModel $event): void
     {
         /** @var LotteryGameMatch $lgm */
         $lgm = $event->getModel();

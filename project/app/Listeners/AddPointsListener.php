@@ -2,8 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Abstracts\EventAttributes;
-use App\Abstracts\ListenerAttributes;
+use App\Abstracts\EventModel;
+use App\Abstracts\ListenerModel;
 use App\Exceptions\ModelNotFoundException;
 use App\Exceptions\UpdatingException;
 use App\Helpers\TransactionHelper;
@@ -12,13 +12,13 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-class AddPointsListener extends ListenerAttributes
+class AddPointsListener extends ListenerModel
 {
 
     /**
      * @throws UpdatingException|ModelNotFoundException
      */
-    public function handle(EventAttributes $event): void
+    public function handle(EventModel $event): void
     {
         /** @var LotteryGameMatch $lgm */
         $lgm = $event->getModel();

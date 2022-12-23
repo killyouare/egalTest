@@ -39,6 +39,6 @@ abstract class Event extends EgalEvent
 
     protected function isSetModel(): bool
     {
-        return $this->model !== null;
+        return !is_null($this->model);
     }
 }

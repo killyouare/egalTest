@@ -25,5 +25,4 @@ class ClosedMatchListener extends ListenerModel
             throw new ValidateException();
         }
     }
-
 }

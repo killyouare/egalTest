@@ -6,6 +6,9 @@ use App\Events\CreatingLotteryGameMatchEvent;
 use App\Events\UpdatingLotteryGameMatchEvent;
 use App\Helpers\TimeHelper;
 use Carbon\Carbon;
+use Egal\Model\Exceptions\ObjectNotFoundException;
+use Egal\Model\Exceptions\UpdateException;
+use Egal\Model\Exceptions\ValidateException;
 use Egal\Model\Model as EgalModel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasRelationships;
@@ -47,16 +50,34 @@ class LotteryGameMatch extends EgalModel
         'updated_at',
     ];
 
+    /**
+     * @throws ValidateException
+     * @throws UpdateException
+     * @throws ObjectNotFoundException
+     */
     public static function actionClose(array $attributes): string
     {
-        event(new UpdatingLotteryGameMatchEvent($attributes));
+        $instance = new static();
 
-        return 'Game closed';
-    }
+        if (!isset($attributes[$instance->getKeyName()])) {
+            throw new UpdateException('The identifier of the entity being updated is not specified!');
+        }
 
-    public function validateKey($keyValue): void
-    {
-        parent::validateKey($keyValue);
+        $id = $attributes[$instance->getKeyName()];
+
+        $instance->validateKey($id);
+
+        /** @var LotteryGameMatch|null $item */
+        $item = $instance->query()
+            ->find($id);
+
+        if (is_null($item)) {
+            throw ObjectNotFoundException::make($id);
+        }
+
+        event(new UpdatingLotteryGameMatchEvent($item));
+
+        return "Game closed. Winner id: {$item->getAttribute('winner_id')}";
     }
 
     public function game(): HasOne

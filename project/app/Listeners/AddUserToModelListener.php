@@ -18,7 +18,7 @@ class AddUserToModelListener extends ListenerModel
         /** @var int|null $user_id */
         $user_id = SessionHelper::getUserId();
 
-        if ($user_id === null) {
+        if (is_null($user_id)) {
             throw new UserNotIdentifiedException();
         }
 
